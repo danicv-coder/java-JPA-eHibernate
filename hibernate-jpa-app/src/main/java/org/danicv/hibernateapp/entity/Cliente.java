@@ -2,6 +2,8 @@ package org.danicv.hibernateapp.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -15,7 +17,15 @@ public class Cliente {
     @Column(name = "forma_pago")
     private String formaPago;
 
+    @Embedded
+    private Auditoria audit = new Auditoria();
+
     public Cliente() {
+    }
+
+    public Cliente(String nombre, String apellido) {
+        this.nombre = nombre;
+        this.apellido = apellido;
     }
 
     public Cliente(Long id, String nombre, String apellido, String formaPago) {
@@ -62,6 +72,8 @@ public class Cliente {
         return "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
-                ", formaPago='" + formaPago;
+                ", formaPago='" + formaPago + '\'' +
+                ", creadoEN='" + audit.getCreadoEn() + '\'' +
+                ", ediatoEn'" + audit.getEditadoEn();
     }
 }
